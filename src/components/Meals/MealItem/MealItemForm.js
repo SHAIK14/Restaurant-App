@@ -1,7 +1,18 @@
+import React, { useContext } from "react";
+
 import Input from "../../UI/Input";
 import classes from "./MealItemForm.module.css";
+import CartContext from "../../../store/cart-context";
 
 const MealItemForm = (props) => {
+  const cartcntx = useContext(CartContext);
+  const addItemToCart = (event) => {
+    event.preventDefault();
+    const quantity = parseInt(
+      document.getElementById("amount_" + props.id).value
+    );
+    cartcntx.addItem({ ...props.item, quantity: quantity });
+  };
   return (
     <form className={classes.form}>
       <Input
@@ -15,7 +26,7 @@ const MealItemForm = (props) => {
           defaultValue: "1",
         }}
       />
-      <button>+ADD</button>
+      <button onClick={addItemToCart}>+ADD</button>
     </form>
   );
 };
